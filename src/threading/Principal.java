@@ -25,6 +25,7 @@ public class Principal {
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.add(new Ball());
 		f.pack();
+		f.setLocationRelativeTo(null);
 		f.setVisible(true);
 	}
 }
@@ -35,6 +36,8 @@ class Ball extends JPanel {
 	}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		g.drawRect(5, 5, 690, 290); //Boarders
 		g.drawString("Example", 10, 20);
+		g.drawOval(20, 20, 20, 20);
 	}
 }
