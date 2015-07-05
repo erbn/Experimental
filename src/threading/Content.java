@@ -6,11 +6,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-public class Content extends JPanel implements Runnable {
+public class Content extends JPanel implements Runnable/*, KeyListener*/ {
 
 	public static int WIDTH = 700;
 	public static int HEIGHT = 300;
@@ -40,6 +42,7 @@ public class Content extends JPanel implements Runnable {
 			thread = new Thread(this);
 			thread.start();
 		}
+		//addKeyListener(this);
 	}
 	public void run() {
 		running = true;
@@ -107,11 +110,15 @@ public class Content extends JPanel implements Runnable {
 
 	private void update() {
 		ball.update();
-		// TODO Auto-generated method stub
-		/*Graphics g2 = this.getGraphics();
-		g2.drawImage(image, 0, 0, null);
-		g2.dispose();*/
 	}
+	
+	/*private void keyTyped(KeyEvent key){}
+	private void keyPressed(KeyEvent key) {
+		
+	}
+	private void keyReleased(KeyEvent key){
+		
+	}*/
 }
 
 /*	public void paintComponent(Graphics g) {
