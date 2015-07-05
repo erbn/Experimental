@@ -34,7 +34,6 @@ public class Ball {
 		if (x >= Content.WIDTH -100 || x <= 100) {	//Right Border || Left Border
 			dx = -dx;
 		}
-		
 		if (y >= Content.HEIGHT -20 || y <= 20) {	//Lower Border || Upper Border
 			dy = -dy;
 		}

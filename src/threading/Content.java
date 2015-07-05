@@ -6,11 +6,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseWheelEvent;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-public class Content extends JPanel implements Runnable, KeyListener {
+public class Content extends JPanel implements Runnable, KeyListener, MouseListener {
 
 	public static int WIDTH = 800;
 	public static int HEIGHT = 400;
@@ -43,6 +46,7 @@ public class Content extends JPanel implements Runnable, KeyListener {
 			thread.start();
 		}
 		addKeyListener(this);
+		addMouseListener(this);
 	}
 	public void run() {
 		running = true;
@@ -121,24 +125,50 @@ public class Content extends JPanel implements Runnable, KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+		//System.out.println("key event.");
+		int keyCode = e.getKeyCode();
+		if(keyCode == KeyEvent.VK_UP) {	//Checking key events for up/down of blocker
+			BlockR.setUp();
+			//System.out.println("up.");
+		} else {
+			if(keyCode == KeyEvent.VK_DOWN) {
+				BlockR.setDown();
+				//System.out.println("down.");
+			} else {
+				if(keyCode == KeyEvent.VK_Q) {
+					BlockL.setUp();
+					//System.out.println("q.");
+				} else {
+					if(keyCode == KeyEvent.VK_A) {
+						BlockL.setDown();
+						//System.out.println("a.");
+					} else {
+						System.out.println("No usable Keyboard input detected. Ignoring.");
+					}
+				}
+			}
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		//System.out.println("key event.");
 		int keyCode = e.getKeyCode();
 		if(keyCode == KeyEvent.VK_UP) {	//Checking key events for up/down of blocker
-			BlockR.setUp(true);
+			BlockR.setUp();
+			//System.out.println("up.");
 		} else {
 			if(keyCode == KeyEvent.VK_DOWN) {
-				BlockR.setDown(true); 
+				BlockR.setDown();
+				//System.out.println("down.");
 			} else {
 				if(keyCode == KeyEvent.VK_Q) {
-					BlockL.setUp(true); 
+					BlockL.setUp();
+					//System.out.println("q.");
 				} else {
 					if(keyCode == KeyEvent.VK_A) {
-						BlockL.setDown(true); 
+						BlockL.setDown();
+						//System.out.println("a.");
 					} else {
 						System.out.println("No usable Keyboard input detected. Ignoring.");
 					}
@@ -152,4 +182,67 @@ public class Content extends JPanel implements Runnable, KeyListener {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void mouseWheelMoved(MouseWheelEvent e) {	//TODO Mouse wheel event never occurs. Alternatives for multiple player mode???
+		System.out.println("MouseWheelEvent");
+		int notches = e.getWheelRotation();
+		if (notches < 0) {
+			BlockR.setDown();
+		} else {
+			BlockR.setUp();
+		}
+	/*       if (notches < 0) {
+	           message = "Mouse wheel moved UP "
+	                        + -notches + " notch(es)" + newline;
+	       } else {
+	           message = "Mouse wheel moved DOWN "
+	                        + notches + " notch(es)" + newline;
+	       }
+	       if (e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL) {
+	           message += "    Scroll type: WHEEL_UNIT_SCROLL" + newline;
+	           message += "    Scroll amount: " + e.getScrollAmount()
+	                   + " unit increments per notch" + newline;
+	           message += "    Units to scroll: " + e.getUnitsToScroll()
+	                   + " unit increments" + newline;
+	           message += "    Vertical unit increment: "
+	               + scrollPane.getVerticalScrollBar().getUnitIncrement(1)
+	               + " pixels" + newline;
+	       } else { //scroll type == MouseWheelEvent.WHEEL_BLOCK_SCROLL
+	           message += "    Scroll type: WHEEL_BLOCK_SCROLL" + newline;
+	           message += "    Vertical block increment: "
+	               + scrollPane.getVerticalScrollBar().getBlockIncrement(1)
+	               + " pixels" + newline;
+	       }
+	       saySomething(message, e);*/
+	    }
 }
