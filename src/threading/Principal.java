@@ -8,26 +8,38 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 
-public class Principal {
+public class Principal extends JFrame {
 
 	static String title = "Jail";
 	
-	public static void main(String[] args) {
-	      javax.swing.SwingUtilities.invokeLater(new Runnable() {
-	          public void run() {
-	             guiCreation();
-	          }
-	       });
-	}
-	public static void guiCreation() {
+	private Principal() {
+		JFrame window = new JFrame(title);
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//window.setSize(700, 300);
+		window.setLocationRelativeTo(null);
+		window.setResizable(false);
+		System.out.println(System.nanoTime() + " Started basic window. Loading GUI.");
+		window.setContentPane(new Content());
+		window.pack();	//TODO This one or window.setSize?
+		window.setVisible(true);
+		/*
 		SwingUtilities.isEventDispatchThread();
 		JFrame f = new JFrame(title);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.add(new Ball());
 		f.pack();
 		f.setLocationRelativeTo(null);
-		f.setVisible(true);
+		f.setVisible(true);*/
 	}
+	
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				new Principal();
+			}
+		});
+	}
+	
 }
 
 class Ball extends JPanel {
