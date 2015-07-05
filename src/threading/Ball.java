@@ -31,18 +31,11 @@ public class Ball {
 	public void update() {
 		
 		//Border Collision check
-		if (x >= Content.WIDTH) {	//Right Border
+		if (x >= Content.WIDTH -100 || x <= 100) {	//Right Border || Left Border
 			dx = -dx;
 		}
 		
-		if (x <= 0) {	//Left Border
-			dx = -dx;
-		}
-		
-		if (y >= Content.HEIGHT) {	//Lower Border
-			dy = -dy;
-		}
-		if (y <= 0) {	//Upper Border
+		if (y >= Content.HEIGHT -20 || y <= 20) {	//Lower Border || Upper Border
 			dy = -dy;
 		}
 		

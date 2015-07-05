@@ -1,7 +1,5 @@
 package threading;
 
-//import java.awt.Container;
-//import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -12,10 +10,10 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-public class Content extends JPanel implements Runnable/*, KeyListener*/ {
+public class Content extends JPanel implements Runnable, KeyListener {
 
-	public static int WIDTH = 700;
-	public static int HEIGHT = 300;
+	public static int WIDTH = 800;
+	public static int HEIGHT = 400;
 	
 	private Thread thread;
 	private boolean running;
@@ -27,6 +25,8 @@ public class Content extends JPanel implements Runnable/*, KeyListener*/ {
 	private double averageFPS;
 	
 	private Ball ball;
+	private BlockL blockL;
+	private BlockR blockR;
 
 	public Content () {
 		super();
@@ -42,7 +42,7 @@ public class Content extends JPanel implements Runnable/*, KeyListener*/ {
 			thread = new Thread(this);
 			thread.start();
 		}
-		//addKeyListener(this);
+		addKeyListener(this);
 	}
 	public void run() {
 		running = true;
@@ -61,6 +61,8 @@ public class Content extends JPanel implements Runnable/*, KeyListener*/ {
 		int maxFrameCount = 30;
 		
 		ball = new Ball();
+		blockR = new BlockR();
+		blockL = new BlockL();
 		
 		while(running) {
 			
@@ -102,28 +104,52 @@ public class Content extends JPanel implements Runnable/*, KeyListener*/ {
 		//g.drawRect(5, 5, 690, 290); //Boarders
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		g.setColor(Color.WHITE);
-		g.drawString("FPS "+ averageFPS, 10, 60);
+		g.drawRect(80, 0, WIDTH-180, HEIGHT-20);
+		g.drawString("FPS "+ averageFPS, WIDTH / 2, HEIGHT-1);
 		//g.drawOval(20, 20, 20, 20);
 		
 		ball.draw(g);
+		blockL.draw(g);
+		blockR.draw(g);
 	}
 
 	private void update() {
 		ball.update();
+		blockL.update(g);
+		blockR.update(g);
 	}
-	
-	/*private void keyTyped(KeyEvent key){}
-	private void keyPressed(KeyEvent key) {
-		
-	}
-	private void keyReleased(KeyEvent key){
-		
-	}*/
-}
 
-/*	public void paintComponent(Graphics g) {
-//super.paintComponent(g);
-g.drawRect(5, 5, 690, 290); //Boarders
-g.drawString("Example", 10, 20);
-g.drawOval(20, 20, 20, 20);
-}*/
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		int keyCode = e.getKeyCode();
+		if(keyCode == KeyEvent.VK_UP) {	//Checking key events for up/down of blocker
+			BlockR.setUp(true);
+		} else {
+			if(keyCode == KeyEvent.VK_DOWN) {
+				BlockR.setDown(true); 
+			} else {
+				if(keyCode == KeyEvent.VK_Q) {
+					BlockL.setUp(true); 
+				} else {
+					if(keyCode == KeyEvent.VK_A) {
+						BlockL.setDown(true); 
+					} else {
+						System.out.println("No usable Keyboard input detected. Ignoring.");
+					}
+				}
+			}
+		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+}
