@@ -23,6 +23,8 @@ public class Content extends JPanel implements Runnable {
 	
 	private int FPS = 30;
 	private double averageFPS;
+	
+	private Ball ball;
 
 	public Content () {
 		super();
@@ -55,6 +57,8 @@ public class Content extends JPanel implements Runnable {
 		int frameCount = 0;
 		int maxFrameCount = 30;
 		
+		ball = new Ball();
+		
 		while(running) {
 			
 			startTime = System.nanoTime();
@@ -83,7 +87,9 @@ public class Content extends JPanel implements Runnable {
 
 	private void draw() {
 		// TODO Auto-generated method stub
-		
+		Graphics g2 = this.getGraphics();
+		g2.drawImage(image, 0, 0, null);
+		g2.dispose();
 	}
 
 	private void render() {
@@ -95,13 +101,16 @@ public class Content extends JPanel implements Runnable {
 		g.setColor(Color.WHITE);
 		g.drawString("FPS "+ averageFPS, 10, 60);
 		//g.drawOval(20, 20, 20, 20);
+		
+		ball.draw(g);
 	}
 
 	private void update() {
+		ball.update();
 		// TODO Auto-generated method stub
-		Graphics g2 = this.getGraphics();
+		/*Graphics g2 = this.getGraphics();
 		g2.drawImage(image, 0, 0, null);
-		g2.dispose();
+		g2.dispose();*/
 	}
 }
 

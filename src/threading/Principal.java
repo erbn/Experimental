@@ -1,10 +1,6 @@
 package threading;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
-
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 
@@ -16,11 +12,11 @@ public class Principal extends JFrame {
 		JFrame window = new JFrame(title);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//window.setSize(700, 300);
-		window.setLocationRelativeTo(null);
 		window.setResizable(false);
 		System.out.println(System.nanoTime() + " Started basic window. Loading GUI.");
 		window.setContentPane(new Content());
 		window.pack();	//TODO This one or window.setSize?
+		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 		/*
 		SwingUtilities.isEventDispatchThread();
@@ -42,7 +38,7 @@ public class Principal extends JFrame {
 	
 }
 
-class Ball extends JPanel {
+/*class Ball extends JPanel {
 	public Dimension getPreferredSize(){
 		return new Dimension(700,300);
 	}
@@ -52,4 +48,4 @@ class Ball extends JPanel {
 		g.drawString("Example", 10, 20);
 		g.drawOval(20, 20, 20, 20);
 	}
-}
+}*/
