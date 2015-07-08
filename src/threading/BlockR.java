@@ -6,28 +6,28 @@ import java.awt.Graphics2D;
 
 public class BlockR {	//Default moving keys: VK_UP → UP; VK_DOWN → DOWN
 
-	private int y;
+	public static int yR;	//Used to inform Ball collision check about Block's position
 	private static int dy;
 	
 	public BlockR() {
-		y = Content.HEIGHT/2;	//Block initially centered 
+		yR = Content.HEIGHT/2;	//Block initially centered 
 	}
 	
 	public void draw(Graphics2D g) {
 		
 		g.setColor(Color.BLUE);
 		g.setStroke(new BasicStroke(3));
-		g.drawLine(700, y-50, 700, y+50);
+		g.drawLine(Content.WIDTH-100, yR-50, Content.WIDTH-100, yR+50);
 	}
 
 	public void update(Graphics2D g) {
 		
-		y += dy;
-		if (y < 40) {	//Keeps the Block in the visible area
-			y = 40;
+		yR += dy;
+		if (yR < 70) {	//Keeps the Block in the visible area
+			yR = 70;
 		} else {
-			if (y > Content.HEIGHT-70) {	//Why is the border to frame end 70?
-				y = Content.HEIGHT-70;
+			if (yR > Content.HEIGHT-90) {
+				yR = Content.HEIGHT-90;
 			}
 		}
 		dy = 0;
@@ -35,13 +35,13 @@ public class BlockR {	//Default moving keys: VK_UP → UP; VK_DOWN → DOWN
 
 	public static void setUp() {
 		
-		dy = -10;
+		dy = -30;
 		//System.out.println("dy" + dy);
 	}
 
 	public static void setDown() {
 		
-		dy = 10;
+		dy = 30;
 		//System.out.println("dy" + dy);
 	}
 

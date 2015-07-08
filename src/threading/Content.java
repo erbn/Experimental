@@ -95,22 +95,23 @@ public class Content extends JPanel implements Runnable, KeyListener, MouseListe
 	}
 
 	private void draw() {
-		// TODO Auto-generated method stub
 		Graphics g2 = this.getGraphics();
 		g2.drawImage(image, 0, 0, null);
 		g2.dispose();
 	}
 
 	private void render() {
-		// TODO Auto-generated method stub
 		//System.out.println(System.nanoTime() + " Rendering.");
 		g.setColor(Color.BLACK);
-		//g.drawRect(5, 5, 690, 290); //Boarders
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		g.setColor(Color.WHITE);
-		g.drawRect(80, 0, WIDTH-180, HEIGHT-20);
+		int[] xcooUL = {80,80,WIDTH-100,WIDTH-100};
+		int[] ycooU = {20, 0, 0, 20};
+		int[] ycooL = {HEIGHT-40,HEIGHT-20,HEIGHT-20,HEIGHT-40};
+		
+		g.drawPolyline(xcooUL, ycooU, 4);	//upper border
+		g.drawPolyline(xcooUL, ycooL, 4);	//lower border
 		g.drawString("FPS "+ averageFPS, WIDTH / 2, HEIGHT-1);
-		//g.drawOval(20, 20, 20, 20);
 		
 		ball.draw(g);
 		blockL.draw(g);
