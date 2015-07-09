@@ -14,8 +14,9 @@ public class Principal extends JFrame {
 		//window.setSize(700, 300);
 		window.setResizable(false);
 		System.out.println(System.nanoTime() + " Started basic window. Loading GUI.");
-		window.setContentPane(new Content());
-		window.pack();	//TODO This one or window.setSize?
+		window.add(new Content());
+		//window.setContentPane(new Content());
+		window.pack();
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 		/*
@@ -37,15 +38,3 @@ public class Principal extends JFrame {
 	}
 	
 }
-
-/*class Ball extends JPanel {
-	public Dimension getPreferredSize(){
-		return new Dimension(700,300);
-	}
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		g.drawRect(5, 5, 690, 290); //Boarders
-		g.drawString("Example", 10, 20);
-		g.drawOval(20, 20, 20, 20);
-	}
-}*/

@@ -30,6 +30,9 @@ public class Content extends JPanel implements Runnable, KeyListener, MouseListe
 	private Ball ball;
 	private BlockL blockL;
 	private BlockR blockR;
+	private Timer timer;
+	
+	public static int start = 0;
 
 	public Content () {
 		super();
@@ -101,29 +104,39 @@ public class Content extends JPanel implements Runnable, KeyListener, MouseListe
 	}
 
 	private void render() {
-		//System.out.println(System.nanoTime() + " Rendering.");
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, WIDTH, HEIGHT);
-		g.setColor(Color.WHITE);
+		
 		int[] xcooUL = {80,80,WIDTH-100,WIDTH-100};
 		int[] ycooU = {20, 0, 0, 20};
 		int[] ycooL = {HEIGHT-40,HEIGHT-20,HEIGHT-20,HEIGHT-40};
 		
+		/*BufferedImage intro = null;
+		try {
+			intro = ImageIO.read(new File("resources/Intro.jpg"));
+		} catch (IOException e) {
+			//TODO
+		}*/
+		
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, WIDTH, HEIGHT);
+		g.setColor(Color.WHITE);
+		
 		g.drawPolyline(xcooUL, ycooU, 4);	//upper border
 		g.drawPolyline(xcooUL, ycooL, 4);	//lower border
 		g.drawString("FPS "+ averageFPS, WIDTH / 2, HEIGHT-1);
+		//g.drawImage(intro, null, 83, 03);
 		
 		ball.draw(g);
 		blockL.draw(g);
-		blockR.draw(g);
+		blockR.draw(g);;
 	}
 
 	private void update() {
-		ball.update();
+		
 		blockL.update(g);
 		blockR.update(g);
+		ball.update();
 	}
-
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		//System.out.println("key event.");
@@ -144,7 +157,11 @@ public class Content extends JPanel implements Runnable, KeyListener, MouseListe
 						BlockL.setDown();
 						//System.out.println("a.");
 					} else {
-						System.out.println("No usable Keyboard input detected. Ignoring.");
+						if(keyCode == KeyEvent.VK_S) {
+							start=1;
+						} else {
+							System.out.println("No usable Keyboard input detected. Ignoring.");
+						}
 					}
 				}
 			}
@@ -171,7 +188,11 @@ public class Content extends JPanel implements Runnable, KeyListener, MouseListe
 						BlockL.setDown();
 						//System.out.println("a.");
 					} else {
-						System.out.println("No usable Keyboard input detected. Ignoring.");
+						if(keyCode == KeyEvent.VK_S) {
+							start=1;
+						} else {
+							System.out.println("No usable Keyboard input detected. Ignoring.");
+						}
 					}
 				}
 			}
