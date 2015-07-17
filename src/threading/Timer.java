@@ -1,16 +1,20 @@
 package threading;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Timer {
 
-	/*public void update(Graphics2D g) {
-		// TODO Auto-generated method stub
-		
-	}*/
+	public static long left = 0;
+	public static long right = 0;
+	public long start = System.currentTimeMillis();
 	
 	public void draw(Graphics2D g) {
-		g.drawString(""+Ball.secsL, 80, Content.HEIGHT-20);
-		g.drawString(""+Ball.secsR, Content.WIDTH-60, Content.HEIGHT-20);
+		g.setColor(Color.WHITE);
+		g.drawString(""+(-left), 10, Content.HEIGHT-8);
+		g.drawString(""+(-right), Content.WIDTH-120, Content.HEIGHT-8);
+		g.drawString("Level " + XY.level, Content.WIDTH/2-20, Content.HEIGHT-8);
+		Ball.blocked = 0;
 	}
+	
 }

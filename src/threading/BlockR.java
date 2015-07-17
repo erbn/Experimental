@@ -8,6 +8,7 @@ public class BlockR {	//Default moving keys: VK_UP → UP; VK_DOWN → DOWN
 
 	public static int yR;	//Used to inform Ball collision check about Block's position
 	private static int dy;
+	public static int extend = 40;	//pixels above (under) center of the block
 	
 	public BlockR() {
 		yR = Content.HEIGHT/2;	//Block initially centered 
@@ -17,17 +18,17 @@ public class BlockR {	//Default moving keys: VK_UP → UP; VK_DOWN → DOWN
 		
 		g.setColor(Color.BLUE);
 		g.setStroke(new BasicStroke(3));
-		g.drawLine(Content.WIDTH-100, yR-50, Content.WIDTH-100, yR+50);
+		g.drawLine(Content.WIDTH-100, yR, Content.WIDTH-100, yR+extend);
 	}
 
-	public void update(Graphics2D g) {
+	public void update() {
 		
 		yR += dy;
-		if (yR < 70) {	//Keeps the Block in the visible area
-			yR = 70;
+		if (yR < 20) {	//Keeps the Block in the visible area
+			yR = 20;
 		} else {
-			if (yR > Content.HEIGHT-90) {
-				yR = Content.HEIGHT-90;
+			if (yR > Content.HEIGHT-40-extend) {
+				yR = Content.HEIGHT-40-extend;
 			}
 		}
 		dy = 0;
@@ -35,13 +36,13 @@ public class BlockR {	//Default moving keys: VK_UP → UP; VK_DOWN → DOWN
 
 	public static void setUp() {
 		
-		dy = -30;
+		dy = -60;
 		//System.out.println("dy" + dy);
 	}
 
 	public static void setDown() {
 		
-		dy = 30;
+		dy = 60;
 		//System.out.println("dy" + dy);
 	}
 

@@ -25,15 +25,16 @@ public class Content extends JPanel implements Runnable, KeyListener, MouseListe
 	private Graphics2D g;
 	
 	private int FPS = 30;
-	private double averageFPS;
+	//private double averageFPS;
+	
+	public static int start = 0;
+	//start=0: intro start=1: delete intro image start=2: playing start=3: ball error
 	
 	private Ball ball;
 	private BlockL blockL;
 	private BlockR blockR;
 	private Timer timer;
 	
-	public static int start = 0;
-
 	public Content () {
 		super();
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -60,9 +61,8 @@ public class Content extends JPanel implements Runnable, KeyListener, MouseListe
 		long startTime;
 		long URDTimeMillis;
 		long waitTime;
-		long totalTime = 0;
+		//long totalTime = 0;
 		long targetTime = 1000 / FPS;
-		
 		
 		int frameCount = 0;
 		int maxFrameCount = 30;
@@ -70,6 +70,7 @@ public class Content extends JPanel implements Runnable, KeyListener, MouseListe
 		ball = new Ball();
 		blockR = new BlockR();
 		blockL = new BlockL();
+		timer = new Timer();
 		
 		while(running) {
 			
@@ -87,12 +88,12 @@ public class Content extends JPanel implements Runnable, KeyListener, MouseListe
 			} catch (Exception e) {
 				//TODO
 			}
-			totalTime += System.nanoTime() - startTime;
+			//totalTime += System.nanoTime() - startTime;
 			frameCount++;
 			if(frameCount == maxFrameCount) {
-				averageFPS = 1000.0 / ((totalTime / frameCount) / 1000000.0);
+				//averageFPS = 1000.0 / ((totalTime / frameCount) / 1000000.0);
 				frameCount = 0;
-				totalTime = 0;
+				//totalTime = 0;
 			}
 		}
 	}
@@ -108,38 +109,32 @@ public class Content extends JPanel implements Runnable, KeyListener, MouseListe
 		int[] xcooUL = {80,80,WIDTH-100,WIDTH-100};
 		int[] ycooU = {20, 0, 0, 20};
 		int[] ycooL = {HEIGHT-40,HEIGHT-20,HEIGHT-20,HEIGHT-40};
-		
-		/*BufferedImage intro = null;
-		try {
-			intro = ImageIO.read(new File("resources/Intro.jpg"));
-		} catch (IOException e) {
-			//TODO
-		}*/
-		
+
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		g.setColor(Color.WHITE);
 		
 		g.drawPolyline(xcooUL, ycooU, 4);	//upper border
 		g.drawPolyline(xcooUL, ycooL, 4);	//lower border
-		g.drawString("FPS "+ averageFPS, WIDTH / 2, HEIGHT-1);
-		//g.drawImage(intro, null, 83, 03);
+		//g.drawString("FPS "+ averageFPS, WIDTH / 2, HEIGHT-1);
 		
 		ball.draw(g);
 		blockL.draw(g);
-		blockR.draw(g);;
+		blockR.draw(g);
+		timer.draw(g);
 	}
 
 	private void update() {
 		
-		blockL.update(g);
-		blockR.update(g);
+		blockL.update();
+		blockR.update();
 		ball.update();
+		//timer.update();
 	}
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
-		//System.out.println("key event.");
+		/*//System.out.println("key event.");
 		int keyCode = e.getKeyCode();
 		if(keyCode == KeyEvent.VK_UP) {	//Checking key events for up/down of blocker
 			BlockR.setUp();
@@ -165,7 +160,7 @@ public class Content extends JPanel implements Runnable, KeyListener, MouseListe
 					}
 				}
 			}
-		}
+		}*/
 	}
 
 	@Override
