@@ -28,6 +28,7 @@ public class Content extends JPanel implements Runnable, KeyListener, MouseListe
 	//private double averageFPS;
 	
 	public static int start = 0;
+	public static int version = 0; 
 	//start=0: intro start=1: delete intro image start=2: playing start=3: ball error
 	
 	private Ball ball;
@@ -66,8 +67,8 @@ public class Content extends JPanel implements Runnable, KeyListener, MouseListe
 		
 		int frameCount = 0;
 		int maxFrameCount = 30;
-		
-		ball = new Ball();
+
+		ball = new Ball(/*version*/);
 		blockR = new BlockR();
 		blockL = new BlockL();
 		timer = new Timer();

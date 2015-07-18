@@ -5,7 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -20,7 +19,6 @@ public class Ball {
 	public static int dy;
 	
 	private boolean lost = false;
-	//private int lostTime = 0;
 	private int lostPosX;
 	private int lostPosY;
 	private int blocked = 0;	//successfull blocks in a row	//TODO Implement detection of successfull blocks
@@ -28,28 +26,30 @@ public class Ball {
 	public static long secsL = 0;
 	public static long secsR = 0;
 	private int dispose = 0;	//Used to mesure time before game has to be relaunched
-	//private long secsLast = System.currentTimeMillis();
 	
 	private BufferedImage intro = null;
+	private BufferedImage over = null;
 	
 	public Ball() {
 		
 		xy = new XY();
 		xy.random(blocked);
-		
-		/*Random ran = new Random();	//Initial direction	//In general, one axis cannot be above 10
-		dx = ran.nextInt(10)+1;	//TODO adapt relation of both directions //TODO Add levels 
-		dy = ran.nextInt(10)+1;*/
 		System.out.println(System.nanoTime() + " dx: " + dx + " dy: " + dy);
 		
 		try {
 			intro = ImageIO.read(new File("resources/Intro.jpg"));
+			over = ImageIO.read(new File("resources/Over.jpg"));
 		} catch (IOException e) {
-			System.err.println("Can't load 'resources/Intro.jpg' Check if this directory is available in the same path " +
+			System.err.println("Can't load 'resources/Intro.jpg' or 'resources/Over.jpg' " +
+					"Check if this directory is available in the same path " +
 					"as this launched *.jar file.");
 		}
 	}
 	
+	/*public Ball(int version) {
+		// TODO Auto-generated constructor stub
+	}*/
+
 	public void update() {
 		
 		if(Content.start!=0) {
@@ -70,14 +70,16 @@ public class Ball {
 						dx = -dx;
 						x = 90;	//in order to prevent the ball crossing the border
 						if (y+10 < BlockL.yL && y > 30) {	//above left block
-							Timer.right += secsR - System.currentTimeMillis();
+							//Timer.right += secsR - System.currentTimeMillis();
+							Timer.right += blocked*XY.level;
 							lost = true;
 							lostPosX = x;
 							lostPosY = y;
 							//Adds elapsed time since last lost to the other player
 						} else {
 							if (y-10 > BlockL.yL+BlockL.extend && y < Content.HEIGHT-50) {	//under left block
-								Timer.right += secsR - System.currentTimeMillis();
+								//Timer.right += secsR - System.currentTimeMillis();
+								Timer.right += blocked*XY.level;
 								lost = true;
 								lostPosX = x;
 								lostPosY = y;
@@ -94,14 +96,16 @@ public class Ball {
 							dx = -dx;
 							x = Content.WIDTH-110;
 							if (y+10 < BlockR.yR && y > 30) {	//above right Block
-								Timer.left += secsL - System.currentTimeMillis();
+								//Timer.left += secsL - System.currentTimeMillis();
+								Timer.left += blocked*XY.level;
 								lost = true;
 								lostPosX = x;
 								lostPosY = y;
 								//Adds elapsed time since last lost to the other player
 							} else {
 								if (y-10 > BlockR.yR+BlockR.extend && y < Content.HEIGHT-50) {	//under right block
-									Timer.left += secsL - System.currentTimeMillis();
+									//Timer.left += secsL - System.currentTimeMillis();
+									Timer.left += blocked*XY.level;
 									lost = true;
 									lostPosX = x;
 									lostPosY = y;
@@ -132,9 +136,15 @@ public class Ball {
 				dispose=0;
 				Content.start=2;
 				lost=false;
-				restart();
+				XY.lives--;
+				if(XY.lives > 0) {
+					restart();
+				} else {
+					System.out.println("Sorry. Both of you lost.");
+					Content.start=4;
+				}
 			}
-		} else {
+		} else {	//0: intro; 1: launching after intro; 2: operational mode; 4: game over
 			if(Content.start==0) {
 				g.drawImage(intro, null, 83, 03);
 			} else {
@@ -142,9 +152,13 @@ public class Ball {
 					g.fillRect(83, 03, intro.getWidth(), intro.getHeight());
 					Content.start=2;
 				} else {
-					if (Content.start!=3) {
+					if (Content.start==2) {
 						g.setColor(Color.GREEN);
 						g.fillOval(x-10, y-10, 20, 20);
+					} else {
+						if (Content.start == 4) {	//TODO Game has to suspend for the time of the game over screen
+							g.drawImage(over, null, 83, 03);
+						}
 					}
 				}
 			}
