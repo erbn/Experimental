@@ -6,11 +6,14 @@ public class XY {
 
 	public static int level = 1;
 	
-	public void random() {
+	public void random(int blocked) {
 		
-		if(Ball.blocked == 3) {	//upgrade after # successfull blocks
+		if(blocked >= 3) {	//upgrade after # successfull blocks
 			level++;
-			Ball.blocked=0;
+			if(BlockL.extend > 40) {	//Reduces size of blocks by level upgrade
+				BlockL.extend = 80-level*4;
+				BlockR.extend = BlockL.extend;
+			}
 		}
 		
 		Random ran = new Random();	//Initial direction of ball

@@ -8,7 +8,7 @@ public class BlockR {	//Default moving keys: VK_UP → UP; VK_DOWN → DOWN
 
 	public static int yR;	//Used to inform Ball collision check about Block's position
 	private static int dy;
-	public static int extend = 40;	//pixels above (under) center of the block
+	public static int extend=80;	//pixels above (under) center of the block
 	
 	public BlockR() {
 		yR = Content.HEIGHT/2;	//Block initially centered 

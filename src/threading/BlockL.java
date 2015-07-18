@@ -9,7 +9,7 @@ public class BlockL {	//Default moving keys: VK_Q → UP; VK_A → DOWN
 
 	public static int yL;	//Used to inform Ball collision check about Block's position
 	private static int dy;
-	public static int extend = 40;
+	public static int extend=80;
 	
 	public BlockL() {
 		yL = Content.HEIGHT/2;	//Block initially centered 
@@ -20,7 +20,6 @@ public class BlockL {	//Default moving keys: VK_Q → UP; VK_A → DOWN
 		g.setColor(Color.BLUE);
 		g.setStroke(new BasicStroke(3));
 		g.drawLine(80, yL, 80, yL+extend);
-		
 	}
 
 	public void update() {

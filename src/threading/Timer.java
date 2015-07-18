@@ -14,7 +14,5 @@ public class Timer {
 		g.drawString(""+(-left), 10, Content.HEIGHT-8);
 		g.drawString(""+(-right), Content.WIDTH-120, Content.HEIGHT-8);
 		g.drawString("Level " + XY.level, Content.WIDTH/2-20, Content.HEIGHT-8);
-		Ball.blocked = 0;
 	}
-	
 }

@@ -23,7 +23,7 @@ public class Ball {
 	//private int lostTime = 0;
 	private int lostPosX;
 	private int lostPosY;
-	public static int blocked = 0;	//successfull blocks in a row	//TODO Implement detection of successfull blocks
+	private int blocked = 0;	//successfull blocks in a row	//TODO Implement detection of successfull blocks
 	
 	public static long secsL = 0;
 	public static long secsR = 0;
@@ -35,7 +35,7 @@ public class Ball {
 	public Ball() {
 		
 		xy = new XY();
-		xy.random();
+		xy.random(blocked);
 		
 		/*Random ran = new Random();	//Initial direction	//In general, one axis cannot be above 10
 		dx = ran.nextInt(10)+1;	//TODO adapt relation of both directions //TODO Add levels 
@@ -69,13 +69,7 @@ public class Ball {
 					if (x < 90) {	//left border
 						dx = -dx;
 						x = 90;	//in order to prevent the ball crossing the border
-							
-						if (y-10 > BlockL.yL && y+10 < BlockL.yL+BlockL.extend) {
-							blocked++;
-						}
-							
 						if (y+10 < BlockL.yL && y > 30) {	//above left block
-							//System.out.println("Above left Block " + x + "," + y + " Block(-) " + BlockL.yL);
 							Timer.right += secsR - System.currentTimeMillis();
 							lost = true;
 							lostPosX = x;
@@ -83,23 +77,23 @@ public class Ball {
 							//Adds elapsed time since last lost to the other player
 						} else {
 							if (y-10 > BlockL.yL+BlockL.extend && y < Content.HEIGHT-50) {	//under left block
-								//System.out.println("Under left Block " + x + "," + y + " Block(+) " + BlockL.yL);
 								Timer.right += secsR - System.currentTimeMillis();
 								lost = true;
 								lostPosX = x;
 								lostPosY = y;
 								//Adds elapsed time since last lost to the other player
-							} 
+							} else { //Block successfull? → Upgrade Level after # successfull blocks
+								if (y-10 >= 20 && y+10 <= Content.HEIGHT-40) {
+									blocked++;
+									//System.out.println("blocked++ " + blocked);
+								}
+							}
 						}
 					} else {
 						if (x > Content.WIDTH-110) {	//right border
 							dx = -dx;
 							x = Content.WIDTH-110;
-							if (y-10 > BlockR.yR && y+10 < BlockR.yR+BlockR.extend) {
-								blocked++;
-							}
 							if (y+10 < BlockR.yR && y > 30) {	//above right Block
-								//System.out.println("Above right Block " + x + "," + y + " Block(-) " + BlockR.yR);
 								Timer.left += secsL - System.currentTimeMillis();
 								lost = true;
 								lostPosX = x;
@@ -107,12 +101,16 @@ public class Ball {
 								//Adds elapsed time since last lost to the other player
 							} else {
 								if (y-10 > BlockR.yR+BlockR.extend && y < Content.HEIGHT-50) {	//under right block
-									//System.out.println("Under right Block " + x + "," + y + " Block(+) " + BlockR.yR);
 									Timer.left += secsL - System.currentTimeMillis();
 									lost = true;
 									lostPosX = x;
 									lostPosY = y;
 									//Adds elapsed time since last lost to the other player
+								} else {	//Block successfull? → Upgrade Level after # successfull blocks
+									if(y-10 >= 20 && y+10 <= Content.HEIGHT-40) {
+										blocked++;
+										//System.out.println("blocked++ " + blocked);
+									}
 								}
 							}
 						}	
@@ -120,7 +118,7 @@ public class Ball {
 				}
 			}
 		}
-		System.out.println(blocked);
+		//System.out.println(blocked);
 	}
 
 	public void draw(Graphics2D g) {
@@ -155,14 +153,8 @@ public class Ball {
 
 	private void restart() {
 		
-		xy.random();
-		
-		/*Random ran = new Random();	//Initial direction	//In general, one axis cannot be above 10
-		dx = ran.nextInt(10)+1;
-		dy = ran.nextInt(10)+1;
-		x = Content.WIDTH / 2;
-		y = Content.HEIGHT / 2;*/
+		xy.random(blocked);
+		blocked=0;
 		System.out.println(System.nanoTime() + " dx: " + dx + " dy: " + dy);
 	}
 }
- 
