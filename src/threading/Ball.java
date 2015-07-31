@@ -30,6 +30,8 @@ public class Ball {
 	private BufferedImage intro = null;
 	private BufferedImage over = null;
 	
+	//private Message msgs;
+	
 	public Ball() {
 		
 		xy = new XY();
@@ -127,37 +129,44 @@ public class Ball {
 
 	public void draw(Graphics2D g) {
 		
+		//msgs = new Message();
+		
 		if (lost) {
 			Content.start=3;
 			dispose++;
 			g.setColor(Color.RED);
 			g.fillOval(lostPosX-10, lostPosY-10, 20, 20);
 			if(dispose==20) {
-				dispose=0;
-				Content.start=2;
-				lost=false;
 				XY.lives--;
 				if(XY.lives > 0) {
+					dispose=0;
+					Content.start=2;
+					lost=false;
 					restart();
 				} else {
 					System.out.println("Sorry. Both of you lost.");
+					g.drawImage(over, null, (Content.WIDTH-intro.getWidth())/2-10, (Content.HEIGHT-intro.getHeight())/2);
 					Content.start=4;
 				}
 			}
-		} else {	//0: intro; 1: launching after intro; 2: operational mode; 4: game over
+			
+		} else {	//0: intro; 1: launching after intro; 2: operational mode; 3: wait; 4: game over
 			if(Content.start==0) {
-				g.drawImage(intro, null, 83, 03);
+				g.drawImage(intro, null, (Content.WIDTH-intro.getWidth())/2-10, (Content.HEIGHT-intro.getHeight())/2);
 			} else {
-				if(Content.start==1) {
-					g.fillRect(83, 03, intro.getWidth(), intro.getHeight());
+				if(Content.start==1) {	//erasing intro screen
+					g.setColor(Color.BLACK);
+					g.fillRect((Content.WIDTH-intro.getWidth())/2-10, (Content.HEIGHT-intro.getHeight())/2, 
+							intro.getWidth(), intro.getHeight());
 					Content.start=2;
 				} else {
-					if (Content.start==2) {
+					if (Content.start==2) {	//standard ball movement update
 						g.setColor(Color.GREEN);
 						g.fillOval(x-10, y-10, 20, 20);
 					} else {
 						if (Content.start == 4) {	//TODO Game has to suspend for the time of the game over screen
 							g.drawImage(over, null, 83, 03);
+							Content.start=3;
 						}
 					}
 				}

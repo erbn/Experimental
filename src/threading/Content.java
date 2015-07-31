@@ -35,6 +35,7 @@ public class Content extends JPanel implements Runnable, KeyListener, MouseListe
 	private BlockL blockL;
 	private BlockR blockR;
 	private Timer timer;
+	//private Message message;
 	
 	public Content () {
 		super();
@@ -72,6 +73,7 @@ public class Content extends JPanel implements Runnable, KeyListener, MouseListe
 		blockR = new BlockR();
 		blockL = new BlockL();
 		timer = new Timer();
+		//message = new Message();
 		
 		while(running) {
 			
@@ -123,10 +125,12 @@ public class Content extends JPanel implements Runnable, KeyListener, MouseListe
 		blockL.draw(g);
 		blockR.draw(g);
 		timer.draw(g);
+		//message.draw(g);
 	}
 
 	private void update() {
-		
+
+		//message.update();
 		blockL.update();
 		blockR.update();
 		ball.update();
